@@ -16,3 +16,19 @@ The LEFC-ZK framework introduces three specialized tiers:
 • **Tier 2 (Edge/Fog Layer):** Edge Nodes intercept requests and absorb the massive computational burden of generating zk-SNARKs.<br>
   • Fog Nodes run localized IPFS pinning services to ensure instant, local document retrieval.<br>
 • **Tier 3 (Cloud/Blockchain Layer):** Geographic Sharding partitions the blockchain consensus layer, allowing parallel smart contracts to verify transactions simultaneously, shattering the 280 TPS limit.<br>
+
+## 🚀 Repository Structure
+* `dataset_generator.py` : Dynamically generates a mock dataset of thousands of concurrent verification requests (using simulated DIDs and IPFS hashes) to stress-test the network.
+* `lefc_evaluation.py` : The core Object-Oriented simulation engine. It models the three tiers, processes the dataset, and conducts a rigorous Ablation Study.
+* `requests_dataset.csv` : The generated mock payload data representing graduation-day traffic.
+
+## ⚙️ Installation & Setup
+To replicate this study, clone the repository and install the required Python dependencies:
+
+```bash
+# Clone the repository
+git clone [https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git](https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git)
+cd A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing
+
+# Install dependencies (Pandas, Matplotlib, Psutil)
+pip install pandas matplotlib psutil
