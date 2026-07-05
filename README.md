@@ -5,41 +5,207 @@
 [![Academic Project](https://img.shields.io/badge/Type-Academic_Research-green.svg)]()
 
 ## 📌 Project Overview
-This repository contains the Python-based network simulation and architectural research for **LEFC-ZK (Layered Edge-Fog-Cloud Sharded Architecture)**.
 
-Modern privacy-preserving academic credentialing systems (such as the base paper ZKBAR-V) utilize Zero-Knowledge Proofs (zk-SNARKs) and zkEVM blockchains to verify degrees without leaking sensitive student metadata. However, these monolithic systems suffer from crippling bottlenecks:
-1. **Computational Overhead:** Forcing mobile devices to generate complex cryptographic proofs drains battery and memory.
-2. **Throughput Bottlenecks:** Single smart-contract queues cap network scalability at roughly 280 Transactions Per Second (TPS).
-3. **Storage Latency:** Relying on the global peer-to-peer IPFS network causes unpredictable document retrieval delays.
+This repository contains the implementation and evaluation framework for **LEFC-ZK (Layered Edge-Fog-Cloud Sharded Architecture)**, a scalable privacy-preserving academic credential verification architecture based on **Zero-Knowledge Proofs (zk-SNARKs)**.
 
-**LEFC-ZK** solves these issues by shifting the system from a flat blockchain model to a scalable 3-tier hierarchy.
+Current blockchain-based academic credentialing systems, such as **ZKBAR-V**, enable institutions to verify academic credentials without revealing sensitive student information. Although these systems provide strong privacy guarantees, they face several scalability challenges when deployed in large-scale environments.
 
-## 🏗️ System Architecture
-The LEFC-ZK framework introduces three specialized tiers:
-* **Tier 1 (Device Layer):** Lightweight mobile clients acting merely as Decentralized Identifier (DID) managers. Zero heavy cryptographic math is performed here.
-* **Tier 2 (Edge/Fog Layer):** * **Edge Nodes** intercept requests and absorb the massive computational burden of generating zk-SNARKs.
-  * **Fog Nodes** run localized IPFS pinning services to ensure instant, local document retrieval.
-* **Tier 3 (Cloud/Blockchain Layer):** Geographic Sharding partitions the blockchain consensus layer, allowing parallel smart contracts to verify transactions simultaneously, shattering the 280 TPS limit.
+The primary limitations include:
 
-## 🚀 Repository Structure
-* `dataset_generator.py` : Dynamically generates a mock dataset of thousands of concurrent verification requests (using simulated DIDs and IPFS hashes) to stress-test the network.
-* `lefc_evaluation.py` : The core Object-Oriented simulation engine. It models the three tiers, processes the dataset, and conducts a rigorous Ablation Study.
-* `requests_dataset.csv` : The generated mock payload data representing graduation-day traffic.
+- **High Computational Cost:** Mobile devices are required to generate computationally expensive zk-SNARK proofs, resulting in excessive CPU usage, memory consumption, and battery drain.
+- **Limited Network Throughput:** A single blockchain verification queue creates a bottleneck, restricting transaction processing to approximately **280 Transactions Per Second (TPS)**.
+- **Unpredictable Storage Latency:** Dependence on the global IPFS network introduces inconsistent document retrieval times due to distributed peer availability.
 
-## ⚙️ Installation & Setup
-To replicate this study, clone the repository and install the required Python dependencies:
+The proposed **LEFC-ZK** architecture addresses these limitations through a hierarchical **Device–Edge–Fog–Cloud** framework that distributes computational workloads, minimizes latency, and enables parallel blockchain verification.
+
+---
+
+# 🏗️ System Architecture
+
+LEFC-ZK introduces a three-tier architecture designed to improve scalability and efficiency.
+
+## Tier 1 – Device Layer
+
+Lightweight mobile clients function primarily as **Decentralized Identifier (DID)** managers.
+
+Responsibilities include:
+
+- Managing user identities
+- Initiating verification requests
+- Signing lightweight transactions
+
+No expensive zk-SNARK generation is performed on user devices.
+
+---
+
+## Tier 2 – Edge/Fog Layer
+
+### Edge Nodes
+
+Edge nodes receive incoming verification requests and perform computationally intensive operations including:
+
+- zk-SNARK proof generation
+- Request preprocessing
+- Load balancing
+
+This significantly reduces resource consumption on mobile devices.
+
+### Fog Nodes
+
+Fog nodes maintain localized IPFS pinning services to:
+
+- Cache frequently accessed credentials
+- Reduce document retrieval latency
+- Improve network reliability during high-demand periods
+
+---
+
+## Tier 3 – Cloud/Blockchain Layer
+
+The cloud layer employs **geographic blockchain sharding**, allowing multiple smart contracts to process verification requests concurrently.
+
+Key benefits include:
+
+- Parallel transaction verification
+- Increased throughput
+- Reduced blockchain congestion
+- Improved scalability for nationwide credential verification systems
+
+---
+
+# 🚀 Repository Structure
+
+```text
+.
+├── dataset_generator.py      # Generates simulated verification requests
+├── lefc_evaluation.py        # Simulation engine and ablation study
+├── requests_dataset.csv      # Generated workload dataset
+├── README.md
+└── requirements.txt
+```
+
+### Files
+
+| File | Description |
+|------|-------------|
+| `dataset_generator.py` | Generates thousands of simulated DID and IPFS-based verification requests for stress testing. |
+| `lefc_evaluation.py` | Implements the complete LEFC-ZK simulation, including Edge, Fog, Cloud, and Blockchain components along with the ablation study. |
+| `requests_dataset.csv` | Mock dataset representing concurrent graduation-day verification traffic. |
+
+---
+
+# ⚙️ Installation
+
+Clone the repository:
 
 ```bash
-# Clone the repository
-git clone [https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git](https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git)
+git clone https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git
+
 cd A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing
+```
 
-# Install dependencies (Pandas, Matplotlib, Psutil)
+Install the required dependencies:
+
+```bash
 pip install pandas matplotlib psutil
+```
 
-## 💻 Usage & Execution
+Or using the requirements file:
 
-**Step 1: Generate the Load-Testing Data**
-Run the generator to create the simulated transaction dataset (`requests_dataset.csv`).
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# 💻 Usage
+
+## Step 1 – Generate the Dataset
+
+Create a synthetic workload representing thousands of concurrent credential verification requests.
+
 ```bash
 python dataset_generator.py
+```
+
+This generates:
+
+```text
+requests_dataset.csv
+```
+
+---
+
+## Step 2 – Run the Simulation
+
+Execute the LEFC-ZK simulation.
+
+```bash
+python lefc_evaluation.py
+```
+
+The simulator processes the generated workload and evaluates system performance under different architectural configurations.
+
+---
+
+# 📊 Evaluation
+
+The simulation compares the proposed architecture against several ablation configurations, including:
+
+- Baseline ZKBAR-V
+- Edge-only architecture
+- Edge + Fog architecture
+- Edge + Sharding architecture
+- Complete LEFC-ZK architecture
+
+Performance metrics include:
+
+- Transactions Per Second (TPS)
+- Average Latency
+- CPU Utilization
+- Memory Usage
+- Storage Retrieval Time
+- Scalability under Increasing Load
+
+---
+
+# 🔬 Research Contributions
+
+The proposed architecture contributes the following improvements:
+
+- Offloading zk-SNARK generation from mobile devices to edge infrastructure
+- Localized IPFS caching through fog computing
+- Geographic blockchain sharding for parallel verification
+- Improved throughput with reduced verification latency
+- Better resource utilization across distributed computing layers
+
+---
+
+# 📄 Citation
+
+If you use this work in your research, please cite:
+
+```bibtex
+@article{LEFCZK2026,
+  title={A Layered Edge-Fog-Cloud Sharded Architecture for ZKP-Based Academic Credentialing},
+  author={Your Name},
+  year={2026},
+  journal={Research Project}
+}
+```
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+# 👨‍💻 Author
+
+**Your Name**
+
+BS Artificial Intelligence
+
+Research Project on Privacy-Preserving Academic Credential Verification using Zero-Knowledge Proofs and Distributed Computing.
