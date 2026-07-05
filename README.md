@@ -78,10 +78,12 @@ Key benefits include:
 ```text
 .
 ├── dataset_generator.py      # Generates simulated verification requests
-├── lefc_evaluation.py        # Simulation engine and ablation study
+├── lefc_implementation.py        # Simulation engine and ablation study
 ├── requests_dataset.csv      # Generated workload dataset
 ├── README.md
-└── requirements.txt
+├── latency_cpu_metrics.png
+├── throughput_metrics.png
+└── Project.pdf
 ```
 
 ### Files
@@ -99,7 +101,7 @@ Key benefits include:
 Clone the repository:
 
 ```bash
-git clone https://github.com/YourUsername/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git
+git clone https://github.com/ZohaWajahat/A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing.git
 
 cd A-Layered-Edge-Fog-Cloud-Sharded-Architecture-for-ZKP-Based-Academic-Credentialing
 ```
@@ -108,12 +110,6 @@ Install the required dependencies:
 
 ```bash
 pip install pandas matplotlib psutil
-```
-
-Or using the requirements file:
-
-```bash
-pip install -r requirements.txt
 ```
 
 ---
@@ -141,7 +137,7 @@ requests_dataset.csv
 Execute the LEFC-ZK simulation.
 
 ```bash
-python lefc_evaluation.py
+python lefc_implementation.py
 ```
 
 The simulator processes the generated workload and evaluates system performance under different architectural configurations.
@@ -188,7 +184,7 @@ If you use this work in your research, please cite:
 ```bibtex
 @article{LEFCZK2026,
   title={A Layered Edge-Fog-Cloud Sharded Architecture for ZKP-Based Academic Credentialing},
-  author={Your Name},
+  author={Zoha Binte Wajahat},
   year={2026},
   journal={Research Project}
 }
@@ -196,15 +192,9 @@ If you use this work in your research, please cite:
 
 ---
 
-# 📜 License
-
-This project is licensed under the **MIT License**.
-
----
-
 # 👨‍💻 Author
 
-**Your Name**
+**Zoha Binte Wajahat**
 
 BS Artificial Intelligence
 
